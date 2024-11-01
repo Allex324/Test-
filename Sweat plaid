@@ -1,0 +1,146 @@
+import React, { useState } from 'react';
+import { ShoppingCart, Search, Menu, X } from 'lucide-react';
+
+const SweetPlaidStore = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selectedColor, setSelectedColor] = useState('Rouge');
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const navLinks = [
+    { text: "Accueil 🏠", href: "#" },
+    { text: "SweetPlaid Classic", href: "#" },
+    { text: "SweetPlaid Kids Classic", href: "#" },
+    { text: "SweetPlaid Motifs", href: "#" },
+    { text: "SweetPlaid XXL Classic", href: "#" },
+    { text: "NEW SweetPlaid XXL Motifs", href: "#" },
+  ];
+
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Top Banner */}
+      <div className="bg-[#2D2654] text-white text-center py-2 text-sm">
+        <p>🚚 ✨ LIVRAISON OFFERTE DÈS 50€ ✨ 📦</p>
+        <p>🎁 ✨ SWEETSOCKS OFFERTES DÈS 100€ ✨ 🎁</p>
+      </div>
+
+      {/* Header */}
+      <header className="border-b">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <button 
+            className="md:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+
+          <div className="flex-1 text-center">
+            <img 
+              src="/api/placeholder/120/40"
+              alt="SweetPlaid Logo"
+              className="h-10 mx-auto"
+            />
+          </div>
+
+          <div className="flex items-center gap-4">
+            <Search className="w-6 h-6" />
+            <button onClick={() => setIsCartOpen(!isCartOpen)}>
+              <ShoppingCart className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <nav className={`${isMenuOpen ? 'block' : 'hidden'} md:block border-t`}>
+          <div className="container mx-auto px-4">
+            <ul className="flex flex-col md:flex-row md:justify-center md:items-center gap-4 py-4">
+              {navLinks.map((link, index) => (
+                <li key={index}>
+                  <a href={link.href} className="hover:text-blue-600">
+                    {link.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </nav>
+      </header>
+
+      {/* Main Content */}
+      <main className="container mx-auto px-4 py-8">
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Product Image */}
+          <div className="relative">
+            <img
+              src="/api/placeholder/600/800"
+              alt="SweetPlaid Rouge"
+              className="w-full rounded-lg"
+            />
+          </div>
+
+          {/* Product Info */}
+          <div>
+            <div className="mb-4">
+              <p className="text-gray-600 italic">
+                "Confortable, on a du mal à le quitter"
+              </p>
+              <p className="text-sm">—Anne, cliente chez SweetPlaid</p>
+            </div>
+
+            <div className="flex items-center mb-4">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <span key={star} className="text-yellow-400">★</span>
+              ))}
+              <span className="ml-2 text-gray-600">(1308 avis)</span>
+            </div>
+
+            <h1 className="text-2xl font-bold mb-4">
+              SweetPlaid™ - Choisissez votre couleur
+            </h1>
+
+            <div className="mb-8">
+              <p className="text-xl font-bold text-blue-600">54,99€</p>
+              <p className="text-gray-500 line-through">69,99€</p>
+              <p className="text-green-600">LIVRAISON EXPRESS DISPONIBLE 📦</p>
+            </div>
+
+            <div className="mb-8">
+              <label className="block text-sm font-medium mb-2">
+                Couleur
+              </label>
+              <select 
+                value={selectedColor}
+                onChange={(e) => setSelectedColor(e.target.value)}
+                className="w-full p-2 border rounded"
+              >
+                <option>Rouge</option>
+                <option>Bleu</option>
+                <option>Noir</option>
+              </select>
+            </div>
+
+            <button className="w-full bg-[#2D2654] text-white py-3 px-6 rounded-lg hover:bg-opacity-90 transition-colors">
+              Ajouter au panier
+            </button>
+          </div>
+        </div>
+      </main>
+
+      {/* Shopping Cart Sidebar */}
+      {isCartOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50">
+          <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-bold">Panier</h2>
+              <button onClick={() => setIsCartOpen(false)}>
+                <X size={24} />
+              </button>
+            </div>
+            <p className="text-gray-500">Votre panier est vide</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default SweetPlaidStore;
